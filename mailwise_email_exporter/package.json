@@ -1,5 +1,5 @@
 {
-  "name": "mailwise_puppeteer",
+  "name": "mailwise_email_exporter",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
