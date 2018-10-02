@@ -79,9 +79,11 @@ const specifyDuration = async (duration, page) => {
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
   await page.setViewport({width: 1500, height: 1200});
+  console.log('Launch a browser.');
 
   // Open a login page
   await page.goto(URL, {waitUntil: Settings.WAIT_UNTIL, timeout: Settings.TIMEOUT});
+  console.log('Exporting the CSV file.');
 
   // Login
   const elmLoginName = await page.$('#username-\\3a 0-text');
@@ -109,6 +111,7 @@ const specifyDuration = async (duration, page) => {
    */
   await page.click('.inputButton[value="書き出す"]');
   await page.waitFor(Settings.TIMEOUT);
+  console.log('Check the download directory to see if the CSV file is exported.');
 
   await browser.close();
 })();
