@@ -6,4 +6,5 @@ This is a repository to store miscellaneous things.
   (mainly for [kintone](https://www.kintone.com/) customize development)
 - `mailwise_email_exporter/`: A Node.js program that exports CSV data from [mailwise](https://mailwise.cybozu.co.jp/)
 - `profile-generator/`: A sample app that displays profiles using React.js
+- `scoreboard`: A sample scoreboard app with React.js
 
