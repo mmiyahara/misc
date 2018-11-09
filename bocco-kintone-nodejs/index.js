@@ -62,7 +62,7 @@ const postMessage = (token, roomId, uuid, message) => {
 
 // Need to input below before running
 // kintone
-const DOMAIN = 'exapmle.cybozu.com';
+const DOMAIN = 'example.cybozu.com';
 const API_TOKEN = 'kintone_api_token';
 const SPACE_ID = 1;
 const APP_ID = 2;
