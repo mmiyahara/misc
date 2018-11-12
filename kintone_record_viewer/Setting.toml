@@ -1,0 +1,6 @@
+[setting]
+domain = "example.cybozu.com"
+username = "user"
+password = "password"
+app_id = "1"
+record_id = "1"
