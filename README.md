@@ -10,4 +10,5 @@ This is a repository to store miscellaneous things.
 - `mailwise_email_exporter/`: Node.js program that exports CSV data from [mailwise](https://mailwise.cybozu.co.jp/)
 - `profile-generator/`: A sample app that displays profiles using React.js
 - `scoreboard/`: A sample scoreboard app using React.js
+- `web-worker-example/`: A Web Workers API example for concatenating strings behind the main thread
 
