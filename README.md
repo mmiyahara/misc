@@ -9,6 +9,7 @@ This is a repository to store miscellaneous things.
 - `kintone_record_viewer/`: CLI viewer for kintone record written in Rust
 - `mailwise_email_exporter/`: Node.js program that exports CSV data from [mailwise](https://mailwise.cybozu.co.jp/)
 - `profile-generator/`: A sample app that displays profiles using React.js
+- `quizlet-oxford-3000/`: Node.js program that crawls Oxford Dictionary and updates Quizlet's set
 - `scoreboard/`: A sample scoreboard app using React.js
 - `web-worker-example/`: A Web Workers API example for concatenating strings behind the main thread
 

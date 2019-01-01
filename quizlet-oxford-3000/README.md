@@ -2,6 +2,7 @@
 ```sh
 # Crawl data from web
 $ node getOxford3000words.js 
+
 # Update the existing set on Quizlet
 $ QUIZLET_CLIENT_ID=CLIENT_ID \
   QUIZLET_SECRET=SECRET_KEY \
