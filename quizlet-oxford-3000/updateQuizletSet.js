@@ -1,11 +1,17 @@
-const rp = require('request-promise');
+const words = require('./wordsFlatten');
+const http = require('http');
 const puppeteer = require('puppeteer');
+const rp = require('request-promise');
+
+http.createServer((_, res) => {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('You should be redirected here.\n');
+}).listen(1337, '127.0.0.1');
 
 const clientId = process.env.QUIZLET_CLIENT_ID;
 const secret = process.env.QUIZLET_SECRET;
 const email = process.env.QUIZLET_GMAIL_ADDRESS;
 const password = process.env.QUIZLET_GMAIL_PASSWORD;
-const setId = process.env.QUIZLET_SET_ID;
 
 const sleep = async(ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -18,7 +24,8 @@ const base64encode = (string) => {
 const getCode = async(clientId) => {
   const RANDOM_STRING = 'RANDOM_STRING'; // TODO: generate random string on each time
   const url = `https://quizlet.com/authorize?response_type=code&client_id=${clientId}&scope=write_set&state=${RANDOM_STRING}`;
-  // TODO: Change headless to be true
+
+  console.log('Quizlet Code is being generated...');
   const browser = await puppeteer.launch({headless: false});
   const page = await browser.newPage();
   await page.goto(url, {waitUntil: 'networkidle0'});
@@ -34,7 +41,7 @@ const getCode = async(clientId) => {
     page.click('#identifierNext > content > span')
   ]);
 
-  await sleep(2000);
+  await sleep(3000);
 
   const inputPassword = await page.$('input[name=password]');
   await inputPassword.type(password);
@@ -43,15 +50,20 @@ const getCode = async(clientId) => {
     page.click('#passwordNext > content')
   ]);
 
-  await sleep(2000);
+  await sleep(3000);
 
   await Promise.all([
     page.waitForNavigation({waitUntil: 'networkidle0'}),
     page.click('.UIButton')
   ]);
 
-  await sleep(2000);
-  return page.url().split('&')[1].split('=')[1];
+  await sleep(3000);
+  const code = page.url().split('&')[1].split('=')[1];
+  await page.close();
+  await browser.close();
+  console.log('Quizlet Code is generated successfully.');
+
+  return code;
 };
 
 
@@ -66,15 +78,49 @@ const getToken = async(code) => {
     body: {
       grant_type: 'authorization_code',
       code: code,
-      redirect_uri: 'https://example.com'
+      redirect_uri: 'http://127.0.0.1:1337'
     },
     json: true
   };
-  return await rp(options).then(r => r.access_token);
+  console.log('Quizlet Token is being generated...');
+  return await rp(options).then(r => {
+    console.log('Quizlet Token is generated successfully.');
+    return r.access_token;
+  });
 };
 
+const generatePutBody = (title, words) => {
+  return {
+    title: title,
+    terms: words.map(word => word.word),
+    definitions: words.map(word => word.def)
+  };
+};
 
-const putSet = async(setId, token, body) => {
+const postSet = async(token) => {
+  const url = `https://api.quizlet.com/2.0/sets`;
+  const options = {
+    method: 'POST',
+    uri: url,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: {
+      title: 'Temp title',
+      terms: ['temp', 'temp'],
+      definitions: ['temp def', 'temp def'],
+      lang_terms: 'en',
+      lang_definitions: 'en'
+    },
+    json: true
+  };
+
+  return await rp(options)
+    .then(r => {console.log(`Set ${r.set_id} has been created.`); return r.set_id;})
+    .catch(e => {console.log(`Error: ${e.message}`); process.exit();});
+};
+
+const putSet = async(token, body, setId) => {
   const url = `https://api.quizlet.com/2.0/sets/${setId}`;
   const options = {
     method: 'PUT',
@@ -85,23 +131,17 @@ const putSet = async(setId, token, body) => {
     body: body,
     json: true
   };
-  await rp(options).then(() => {console.log(`Set ${setId} has been updated.`);});
+
+  await rp(options)
+    .then(() => {console.log(`Set ${setId} has been updated.`);})
+    .catch(e => {console.log(`Error: ${e.message}`);});
 };
 
 (async () => {
   const code = await getCode(clientId);
   const token = await getToken(code);
-  // TODO: Read crawled words file and create body based on it
-  const body = {
-    title: 'aaa',
-    terms: [
-      'aaaaaa',
-      'bbbbbb'
-    ],
-    definitions: [
-      'aaaaaaaaaaaa',
-      'bbbbbbbbbbbb'
-    ]
-  };
-  await putSet(setId, token, body);
+  const setId = await postSet(token);
+  const putBody = generatePutBody('Oxford 3000 - 1', words);
+  await putSet(token, putBody, setId);
+  process.exit();
 })();

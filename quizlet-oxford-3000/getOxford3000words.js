@@ -81,5 +81,5 @@ puppeteer.launch().then(async browser => {
     words.push(await fetchWords(browser, url));
   }
   await browser.close();
-  await fs.writeFile('words.js', JSON.stringify(words, null, '    '));
+  await fs.writeFile('words.js', JSON.stringify(words, null, '  '));
 });
