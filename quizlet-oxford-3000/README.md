@@ -13,12 +13,12 @@ $ node stripHTML.js
 # e.g.) Some raw data has the definition of "Failed to feach!" as the HTML structure is slightly different.
 # e.g.) Some raw data has the definition of "Failed to feach!" as the HTML does not have its own definition.
 
-# Update the existing set on Quizlet
+# Add new set on Quizlet
 $ QUIZLET_CLIENT_ID=CLIENT_ID \
   QUIZLET_SECRET=SECRET_KEY \
   QUIZLET_GMAIL_ADDRESS=GMAIL_ADDRESS_FOR_OAUTH \
   QUIZLET_GMAIL_PASSWORD=GMAIL_PASSWORD_FOR_OAUTH \
-  node updateQuizletSet.js
+  node addQuizletSet.js
 
     Quizlet Code is being generated...
     Quizlet Code is generated successfully.
