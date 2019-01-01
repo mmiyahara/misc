@@ -1,0 +1,17 @@
+{
+  "name": "oxford3000quizlet",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mstttk <mstkmyhr@gmail.com> (https://github.com/mmiyahara)",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "puppeteer": "^1.11.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
