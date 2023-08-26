@@ -5,7 +5,8 @@ This is a repository to store miscellaneous things.
 - `bulletin-board/`: A sample bulletin board app using React.js
 - `chrome/`: JavaScript files that can be run in `Console` or `Sources > snippets` function in Chrome Devtool  
   (mainly for [kintone](https://www.kintone.com/) customize development)
-- `flexbox-example`: Sample HTML/CSS file for Flexbox
+- `data-structure-course/`: [UC Berkeley, Data Structures Course](https://sp19.datastructur.es/)
+- `flexbox-example/`: Sample HTML/CSS file for Flexbox
 - `guessing_game/`: A guessing game code written in Rust
 - `kintone_record_viewer/`: CLI viewer for kintone record written in Rust
 - `mailwise_email_exporter/`: Node.js program that exports CSV data from [mailwise](https://mailwise.cybozu.co.jp/)
