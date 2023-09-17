@@ -1,4 +1,5 @@
 # misc
+
 This is a repository to store miscellaneous things.
 
 - `bocco-kintone-nodejs/`: Node.js program that lets [BOCCO](http://www.bocco.me/?language=en) say a message stored in [kintone](https://www.kintone.com/)
@@ -14,4 +15,3 @@ This is a repository to store miscellaneous things.
 - `quizlet-oxford-3000/`: Node.js program that crawls Oxford Dictionary and updates Quizlet's set
 - `scoreboard/`: A sample scoreboard app using React.js
 - `web-worker-example/`: A Web Workers API example for concatenating strings behind the main thread
-
