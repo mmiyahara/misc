@@ -5,8 +5,13 @@ public class IntList implements List<Integer> {
     private int size;
 
     private class IntNode {
-        private int value;
+        private Integer value;
         private IntNode nextNode;
+
+        public IntNode() {
+            value = null;
+            nextNode = null;
+        }
 
         public IntNode(int i) {
             value = i;
@@ -15,7 +20,7 @@ public class IntList implements List<Integer> {
     }
 
     public IntList() {
-        firstNode = null;
+        firstNode = new IntNode();
         size = 0;
     }
 
@@ -68,38 +73,44 @@ public class IntList implements List<Integer> {
 
     @Override
     public void addFirst(Integer e) {
-        add(e, 0);
+        IntNode node = new IntNode(e);
+        addHelper(0, 0, node, firstNode, null);
     }
 
     @Override
     public void addLast(Integer e) {
-        IntNode lastNode = getHelper(size - 1, 0, firstNode);
         IntNode node = new IntNode(e);
-        lastNode.nextNode = node;
-        size += 1;
+        addHelper(size, 0, node, firstNode, null);
     }
 
-    private IntNode getHelper(int targetIndex, int currentIndex, IntNode n) {
+    private Integer getHelper(int targetIndex, int currentIndex, IntNode currentNode) {
+        if (targetIndex < 0 || targetIndex >= size) {
+            System.err.println("targetIndex(" + targetIndex + ") is out of range.");
+            return null;
+        }
+        if (size == 0) {
+            return null;
+        }
         if (targetIndex == currentIndex) {
-            return n;
+            return currentNode.value;
         }
         int nextIndex = currentIndex + 1;
-        return getHelper(targetIndex, nextIndex, n.nextNode);
+        currentNode = currentNode.nextNode;
+        return getHelper(targetIndex, nextIndex, currentNode);
     }
 
     @Override
     public Integer get(int index) {
-        IntNode node = getHelper(index, 0, firstNode);
-        return node.value;
+        return getHelper(index, 0, firstNode);
     }
 
     @Override
     public Integer getFirst() {
-        return get(0);
+        return getHelper(0, 0, firstNode);
     }
 
     private Integer removeHelper(int targetIndex, int currentIndex, IntNode currentNode, IntNode prevNode) {
-        if (targetIndex < 0 || targetIndex > size) {
+        if (size == 0 || targetIndex < 0 || targetIndex > size) {
             System.err.println("Index " + targetIndex + " is out of range.");
             return null;
         }
@@ -127,7 +138,7 @@ public class IntList implements List<Integer> {
 
     @Override
     public Integer removeLast() {
-        return remove(size - 1);
+        return removeHelper(size - 1, 0, firstNode, null);
     }
 
     @Override
