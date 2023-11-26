@@ -27,6 +27,18 @@ public class SLList<T> implements List<T> {
         sentinel.next = node;
         size += 1;
     }
+
+    /*
+     * NOTE:
+     * The addFirst operation has a time complexity of O(1), while the addLast has a
+     * time compelexity of O(n).
+     * This means that addFirst takes constant time to execute, regardless of the
+     * size of the data structure, while addLast takes time proportional to the size
+     * of the data structure.
+     * In this regard, the DLList data structure is superior to the SLList data
+     * structure, as it provides O(1) time complexity for both addFirst and addLast
+     * operations.
+     */
     private boolean addHelper(int targetIndex, int currentIndex, Node addNode, Node prevNode) {
         if (targetIndex < 0 || targetIndex > size) {
             System.err.println("targetIndex(" + targetIndex + ") is out of range.");
