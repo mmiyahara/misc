@@ -3,16 +3,16 @@ package com.data_structure_java;
 public class SLList<T> implements List<T> {
     private class Node {
         private T value;
-        private Node nextNode;
+        private Node next;
 
         public Node() {
             value = null;
-            nextNode = null;
+            next = null;
         }
 
         public Node(T v) {
             value = v;
-            nextNode = null;
+            next = null;
         }
     }
 
@@ -23,24 +23,24 @@ public class SLList<T> implements List<T> {
     }
 
     public SLList(T v) {
-        sentinel.nextNode = new Node(v);
+        Node node = new Node(v);
+        sentinel.next = node;
         size += 1;
     }
-
     private boolean addHelper(int targetIndex, int currentIndex, Node addNode, Node prevNode) {
         if (targetIndex < 0 || targetIndex > size) {
             System.err.println("targetIndex(" + targetIndex + ") is out of range.");
             return false;
         }
         if (targetIndex == currentIndex) {
-            Node tmp = prevNode.nextNode;
-            prevNode.nextNode = addNode;
-            prevNode.nextNode.nextNode = tmp;
+            Node tmp = prevNode.next;
+            prevNode.next = addNode;
+            prevNode.next.next = tmp;
             size += 1;
             return true;
         }
         currentIndex += 1;
-        prevNode = prevNode.nextNode;
+        prevNode = prevNode.next;
         return addHelper(targetIndex, currentIndex, addNode, prevNode);
     }
 
@@ -52,14 +52,12 @@ public class SLList<T> implements List<T> {
 
     @Override
     public void addFirst(T v) {
-        Node node = new Node(v);
-        addHelper(0, 0, node, sentinel);
+        add(v, 0);
     }
 
     @Override
     public void addLast(T v) {
-        Node node = new Node(v);
-        addHelper(size, 0, node, sentinel);
+        add(v, size);
     }
 
     private T getHelper(int targetIndex, int currentIndex, Node currentNode) {
@@ -71,10 +69,10 @@ public class SLList<T> implements List<T> {
             return null;
         }
         if (targetIndex == currentIndex) {
-            return currentNode.nextNode.value;
+            return currentNode.next.value;
         }
         currentIndex += 1;
-        currentNode = currentNode.nextNode;
+        currentNode = currentNode.next;
         return getHelper(targetIndex, currentIndex, currentNode);
     }
 
@@ -94,13 +92,13 @@ public class SLList<T> implements List<T> {
             return null;
         }
         if (targetIndex == currentIndex) {
-            Node removedNode = currentNode.nextNode;
-            currentNode.nextNode = currentNode.nextNode.nextNode;
+            Node removedNode = currentNode.next;
+            currentNode.next = currentNode.next.next;
             size -= 1;
             return removedNode.value;
         }
         currentIndex += 1;
-        currentNode = currentNode.nextNode;
+        currentNode = currentNode.next;
         return removeHelper(targetIndex, currentIndex, currentNode);
     }
 
