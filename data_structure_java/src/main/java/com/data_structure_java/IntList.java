@@ -31,14 +31,10 @@ public class IntList implements List<Integer> {
 
     /*
      * NOTE:
-     * It has to include `prevNode` as an argument because
-     *
-     * - `IntNode` only has `nextNode` prop. It does not have `prevNode` prop.
-     * - `add` operation should insert a value previous to the value at
+     * The `add` operation should insert a value prior to the value at
      * `targetIndex`.
-     *
-     * I guess this is one of the reasons why SLList and DLList are easier to
-     * implement List.
+     * This is likely one of the reasons why SLList and DLList with `sentinel` are
+     * easier to implement than those without `sentinel`.
      */
     private boolean addHelper(int targetIndex, int currentIndex, IntNode addNode, IntNode currentNode,
             IntNode prevNode) {
